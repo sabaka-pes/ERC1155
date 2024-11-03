@@ -4,8 +4,9 @@ pragma solidity ^0.8.0;
 import "./ERC1155.sol";
 import "./ERC1155Burnable.sol";
 import "./Pausable.sol";
+import "./ERC1155Supply.sol";
 
-contract MyToken is ERC1155, Pausable, ERC1155Burnable {
+contract MyToken is ERC1155, Pausable, ERC1155Burnable, ERC1155Supply {
     address public owner;
 
     modifier onlyOwner() {
@@ -54,7 +55,7 @@ contract MyToken is ERC1155, Pausable, ERC1155Burnable {
         uint[] memory ids,
         uint[] memory amounts,
         bytes memory data
-    ) internal whenNotPaused override {
+    ) internal whenNotPaused override(ERC1155, ERC1155Supply) {
         super._beforeTokenTransfer(operator, from, to, ids, amounts, data);
     }
 }
